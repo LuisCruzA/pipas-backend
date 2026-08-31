@@ -4,8 +4,8 @@ import { RolUsuario, EstadoUsuario } from '../enums/user.enum.js';
 
 @Entity('usuarios')
 export class User{
-@PrimaryGeneratedColumn()
-  id: number;
+@PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 150 })
   nombre: string;
