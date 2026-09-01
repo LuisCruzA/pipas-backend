@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { UsersService } from '../services/users.service.js';
 import { CreateUserDto } from '../dto/create-user.dto.js';
 import { UpdateUserDto } from '../dto/update-user.dto.js';
@@ -17,6 +17,11 @@ export class UsersController {
     @Get()
     getAll(){
         return this.userServices.findAll()
+    }
+
+    @Get(':id/vehicles')
+    getUserVehicles(@Param('id', ParseUUIDPipe) id:string ){
+        return this.userServices.findUserWithVehicles(id)
     }
 
     @Get(':id')

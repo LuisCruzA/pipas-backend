@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { VehicleModule } from './vehicle/vehicle.module.js';
 
 
 @Module({
@@ -17,7 +18,8 @@ autoLoadEntities: true,
       retryDelay: 3000,
       retryAttempts:10
     }),
-    UserModule],
+    UserModule,
+    VehicleModule],
   controllers: [],
   providers: [],
 })

@@ -1,9 +1,8 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity.js';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto.js';
-import { error } from 'console';
 import { UpdateUserDto } from '../dto/update-user.dto.js';
 @Injectable()
 export class UsersService {
@@ -14,6 +13,40 @@ export class UsersService {
     async findAll(){
        const user = await this.userRepo.find();
         return user;
+    }
+
+    async findUserWithVehicles(id:string){
+        const user = await this.userRepo.findOne({ 
+            where: {id:id},
+            relations:{vehiculosAsignados:true},
+            select:{
+                id:true,
+                nombre:true,
+                numeroLicencia:true,
+                vigencia:true,
+                estado:true,
+                vehiculosAsignados:{
+                    id:true,
+                    modelo:true,
+                    marca: true,
+                    color:true,
+                    tipo:true,
+                    placas:true,
+                    capacidad:true,
+                    estatus:true,
+                    
+                }
+
+            }
+
+        });
+
+       if(!user){
+            throw new Error(`Usuario con el id ${id} no encontrado`)
+        }
+
+        return user;
+
     }
 
 

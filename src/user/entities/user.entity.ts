@@ -1,6 +1,8 @@
 //entidades schema para la tabla de usuarios
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { RolUsuario, EstadoUsuario } from '../enums/user.enum.js';
+import { Vehicle } from '../../vehicle/entities/vehicle.entity.js';
 
 @Entity('usuarios')
 export class User{
@@ -25,6 +27,10 @@ export class User{
   @Column({ type: 'enum', enum: EstadoUsuario, default: EstadoUsuario.ACTIVO })
   estado: EstadoUsuario;
 
+  // Esta es la conexión inversa (Virtual)
+    @OneToMany(() => Vehicle, (vehiculo) => vehiculo.responsable)
+    vehiculosAsignados: Relation<Vehicle[]>;
+    
   @CreateDateColumn()
   createdAt: Date;
 }
