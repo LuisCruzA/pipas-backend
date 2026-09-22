@@ -6,6 +6,7 @@ import { IncomesService } from '../services/incomes.service.js';
 @Controller('api/incomes')
 export class IncomesController {
 
+        //inyeccion de dependencias para usar los servcios de income
         constructor(private incomeServices: IncomesService){}
 
     @Get()

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, ManyToMany, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { TipoMaterial, TipoServicio, CapacidadPipa } from '../enums/incomes.enum.js';
 import { User } from '../../user/entities/user.entity.js';
 import type { Relation } from 'typeorm';
@@ -54,6 +54,7 @@ export class Incomes{
     vehiculo: Relation<Vehicle>
 
 
-    
+    @CreateDateColumn()
+    createdAt:Date
 
 }

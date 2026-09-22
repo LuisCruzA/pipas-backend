@@ -5,11 +5,12 @@ import { ExpensesController } from './controllers/expenses.controller.js';
 import { IncomesController } from './controllers/incomes.controller.js';
 import { Incomes } from './entities/incomes.entity.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Expenses } from './entities/expenses.entity.js';
 
 @Module({
   //importamos las entidades correspondientess
   imports:[
-   TypeOrmModule.forFeature ([Incomes])
+   TypeOrmModule.forFeature ([Incomes,Expenses])
   ],
   providers: [IncomesService, ExpensesService],
   controllers: [ExpensesController, IncomesController]
