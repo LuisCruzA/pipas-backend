@@ -1,14 +1,16 @@
-import { Transform } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IIncome } from "../interfaces/income.interface.js";
-import { IsString, IsNotEmpty, IsOptional, IsEnum, IsDateString, IsUUID, IsNumber, IsPositive } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsEnum, IsDateString, IsUUID, IsNumber, IsPositive, IsDate } from 'class-validator';
 import { CapacidadPipa, TipoMaterial, TipoServicio } from "../enums/incomes.enum.js";
 
 
 
 export class CreateIncomeDto implements IIncome{
-    @IsDateString()
-      @IsNotEmpty()
-      fecha: Date;
+   
+       @Type(()=> Date)
+       @IsDate()
+       @IsNotEmpty()
+       fecha:Date
 
       @Transform(({ value }) => value?.toLowerCase())
         @IsEnum(TipoServicio , { message: 'El tipo servicio debe ser pipa de agua,garrafon de agua, maquinaria u volteo' })

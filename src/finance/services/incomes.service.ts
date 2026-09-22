@@ -54,6 +54,7 @@ export class IncomesService {
 
         return income;
     }
+    
 
     async create(body:CreateIncomeDto){
         const income =  this.incomeRepo.create(body);
