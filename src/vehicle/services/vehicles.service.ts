@@ -25,6 +25,7 @@ export class VehiclesService {
                 capacidad:true,
                 estatus:true,
                 responsable:{
+                    id:true,
                     nombre:true
                 }
 

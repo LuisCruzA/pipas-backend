@@ -32,9 +32,11 @@ export class ExpensesService {
                     descripcion:true,
                     monto:true,
                     empleado:{
+                        id:true,
                          nombre:true
                     },
                     vehiculo:{
+                        id:true,
                         marca:true,
                         placas:true,
                         tipo:true

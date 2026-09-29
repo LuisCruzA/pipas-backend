@@ -36,9 +36,11 @@ export class IncomesService {
             monto_total:true,
             nota_url:true,
             responsable:{
+                id:true,
                 nombre:true
             },
             vehiculo:{
+                id:true,
                 marca:true,
                 placas:true,
                 tipo:true
