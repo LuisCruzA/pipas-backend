@@ -11,30 +11,26 @@ export class ExpensesController {
 
     @Get()
     getAll(){
-        return ''
+        return this.expenseService.findAll();
     }
 
     @Get(':id')
     getOne(@Param('id', ParseUUIDPipe) id:string){
-        return ''
-
+        return this.expenseService.findOne(id);
     }
 
     @Post()
     create(@Body() body:CreateExpenseDto){
-        return''
+        return this.expenseService.create(body);
     }
 
     @Patch(':id')
     update(@Param('id', ParseUUIDPipe) id:string, @Body() body:UpdateExpenseDto){
-
-        return ''
+        return this.expenseService.update(body, id);
     }
 
-  
     @Delete(':id')
     delete(@Param('id', ParseUUIDPipe) id:string){
-        return ''
+        return this.expenseService.delete(id);
     }
-
 }

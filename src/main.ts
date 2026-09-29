@@ -6,6 +6,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // Habilita CORS para que el frontend Flutter (que corre en otro puerto u origen)
+  // pueda hacer peticiones HTTP al backend sin que el navegador las bloquee.
+  app.enableCors();
   // Activación del escudo de validación global
   app.useGlobalPipes(
     new ValidationPipe({
