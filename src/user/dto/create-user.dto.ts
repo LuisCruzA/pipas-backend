@@ -1,5 +1,5 @@
 // src/user/dto/create-user.dto.ts
-import { IsString, IsNotEmpty, IsOptional, IsEnum, IsDateString } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsEnum, IsDateString, IsEmail } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { Iuser } from '../interfaces/user.interface.js';
 import { RolUsuario, EstadoUsuario } from '../enums/user.enum.js';
@@ -27,6 +27,16 @@ export class CreateUserDto implements Iuser {
   @IsDateString()
   @IsOptional()
   vigencia?: Date;
+
+  @IsEmail()
+  @IsOptional()
+  email?: string;
+
+  @IsString()
+  @IsOptional()
+  password?: string |null |undefined;
+
+  
 
   @IsEnum(EstadoUsuario)
   @IsNotEmpty()

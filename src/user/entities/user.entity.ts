@@ -37,6 +37,13 @@ export class User{
   @Column({ type: 'enum', enum: EstadoUsuario, default: EstadoUsuario.ACTIVO })
   estado: EstadoUsuario;
 
+  @Column({type: 'varchar',unique: true, length:100, nullable: true})
+  email:string;
+
+   @Column({type: 'varchar',select: false,  length:255, nullable:true})
+  password?:string | null | undefined;
+
+
   // Esta es la conexión inversa (Virtual)
     @OneToMany(() => Vehicle, (vehiculo) => vehiculo.responsable)
     vehiculosAsignados: Relation<Vehicle[]>;

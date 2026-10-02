@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { CreateExpenseDto } from '../dto/create-expense.dto.js';
 import { UpdateExpenseDto } from '../dto/update-expense.dto.js';
 import { ExpensesService } from '../services/expenses.service.js';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard.js';
 
+@UseGuards(JwtAuthGuard)
 @Controller('api/expenses')
 export class ExpensesController {
 

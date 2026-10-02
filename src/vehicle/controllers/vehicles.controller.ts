@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { VehiclesService } from '../services/vehicles.service.js';
 import { CreateVehicleDto } from '../dto/create-vehicle.js';
 import { UpdateVehicleDto } from '../dto/update-vehicle.js';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard.js';
 
+@UseGuards(JwtAuthGuard)
 @Controller('api/vehicles')
 export class VehiclesController {
     //inyeccion de dependecias
