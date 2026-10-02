@@ -3,6 +3,8 @@ import { UserModule } from './user/user.module.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { VehicleModule } from './vehicle/vehicle.module.js';
 import { FinanceModule } from './finance/finance.module.js';
+import { AuthModule } from './auth/auth.module.js';
+import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
@@ -19,9 +21,13 @@ autoLoadEntities: true,
       retryDelay: 3000,
       retryAttempts:10
     }),
+    ConfigModule.forRoot({
+      isGlobal:true
+    }),//lee el .env
     UserModule,
     VehicleModule,
-    FinanceModule],
+    FinanceModule,
+    AuthModule],
   controllers: [],
   providers: [],
 })

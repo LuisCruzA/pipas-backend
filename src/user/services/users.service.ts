@@ -4,6 +4,7 @@ import { User } from '../entities/user.entity.js';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto.js';
 import { UpdateUserDto } from '../dto/update-user.dto.js';
+import * as bycript from 'bcrypt'
 @Injectable()
 export class UsersService {
 
@@ -60,6 +61,14 @@ export class UsersService {
 
 
    async create(body: CreateUserDto){
+
+    if(body.password && body.rol === 'admin'){
+        body.password = await bycript.hash(body.password, 10)
+    }
+    else{
+        body.password = undefined;
+    }
+
         const newUSer =  this.userRepo.create(body);
        return  await this.userRepo.save(newUSer);
         
@@ -67,6 +76,14 @@ export class UsersService {
 
 
     async update(id:string, body:UpdateUserDto){
+         if(body.password){
+            body.password = await bycript.hash(body.password, 10)
+         }
+
+         if(body.rol && body.rol!=='admin'){
+            body.password = null
+         }
+
         const user = await this.userRepo.preload({
             id:id,
             ...body
@@ -75,6 +92,8 @@ export class UsersService {
         if(!user){
             throw new Error(`Usuario con el id ${id} no encontrado`);
         }
+
+       
 
         return await this.userRepo.save(user)
 
@@ -88,6 +107,24 @@ export class UsersService {
         }
 
         return await this.userRepo.remove(user);
+
+    }
+
+
+    async findByEmailWithPassword(email:string){
+        const user = await this.userRepo.findOne({
+            where:{email},
+           select:{
+            id:true, 
+            rol:true,
+            email:true,
+            password:true
+           }
+        })
+
+        
+
+        return user;
 
     }
 

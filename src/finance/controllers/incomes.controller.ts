@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { CreateIncomeDto } from '../dto/create-income.dto.js';
 import { UpdateIncomeDto } from '../dto/update-income.dto.js';
 import { IncomesService } from '../services/incomes.service.js';
-
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard.js';
+@UseGuards(JwtAuthGuard)
 @Controller('api/incomes')
 export class IncomesController {
 

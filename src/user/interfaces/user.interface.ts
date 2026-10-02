@@ -7,4 +7,6 @@ export interface Iuser{
     numeroLicencia?:string,
     vigencia?:Date,
     estado:EstadoUsuario,
+    email?:string,
+    password?:string | null | undefined
 }
