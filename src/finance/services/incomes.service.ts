@@ -13,7 +13,33 @@ export class IncomesService {
 
 
    async findAll(){
-     const income = await this.incomeRepo.find();
+     const income = await this.incomeRepo.find({
+        relations:{responsable:true, vehiculo:true},
+select:{
+            id:true,
+            fecha:true,
+            tipo_servicio:true,
+            cantidad_horas:true,
+            cantidad_viajes:true,
+            cantidad_garrafones:true,
+            capacidad_pipa:true,
+            tipo_material:true,
+            monto_total:true,
+            nota_url:true,
+            responsable:{
+                id:true,
+                nombre:true
+            },
+            vehiculo:{
+                id:true,
+                marca:true,
+                placas:true,
+                tipo:true
+
+            }
+        }
+     });
+     
      
      return income
 

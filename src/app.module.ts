@@ -5,6 +5,7 @@ import { VehicleModule } from './vehicle/vehicle.module.js';
 import { FinanceModule } from './finance/finance.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { ConfigModule } from '@nestjs/config';
+import { StaticsModule } from './statics/statics.module.js';
 
 
 @Module({
@@ -27,7 +28,8 @@ autoLoadEntities: true,
     UserModule,
     VehicleModule,
     FinanceModule,
-    AuthModule],
+    AuthModule,
+    StaticsModule],
   controllers: [],
   providers: [],
 })
