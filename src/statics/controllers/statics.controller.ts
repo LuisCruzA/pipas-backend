@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { StaticsService } from '../services/statics.service.js';
+import { FilterStaticsDto } from '../dto/filtro-static.dto.js';
 
 @Controller('api/statics')
 export class StaticsController {
@@ -8,12 +9,27 @@ export class StaticsController {
     constructor(private readonly staticsService: StaticsService){}
 
     @Get('ingreso-total')
-    ingresoTotal(){
-         return this.staticsService.ingresoTotal();
+    GetIngresoTotal(){
+         return this.staticsService.getIngresoTotal();
     }
 
     @Get('gasto-total')
-    gastoTotal(){
-        return this.staticsService.gastoTotal()
+    GetGastoTotal(){
+        return this.staticsService.getGastoTotal()
+    }
+
+    @Get('dashboard-resume')
+    GetDashboardResume(){
+        return this.staticsService.GetDashboardResume()
+    }
+
+    @Get('ingreso-resume')
+    GetIngresoResume(@Query() filtro:FilterStaticsDto ){
+        return this.staticsService.GetIngresoResume(filtro)
+    }
+
+    @Get('gasto-resume')
+    GetGastoResume(@Query() filtro:FilterStaticsDto ){
+        return this.staticsService.GetGastoResume(filtro)
     }
 }
