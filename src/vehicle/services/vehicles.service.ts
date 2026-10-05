@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Vehicle } from '../entities/vehicle.entity.js';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -40,7 +40,7 @@ export class VehiclesService {
         const vehicle = await this.vehicleRepo.findOneBy({id});
 
         if(!vehicle){
-            throw new Error(`Vehiculo con el ${id} no eonctrado`)
+            throw new NotFoundException(`Vehiculo con el ${id} no eonctrado`)
 
         }
 

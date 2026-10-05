@@ -13,7 +13,27 @@ export class ExpensesService {
 
 
     async findAll(){
-        const expense  = await this.expenseRepo.find();
+        const expense  = await this.expenseRepo.find({
+            relations:{empleado:true, vehiculo:true},
+            select:{
+                    id:true,
+                    fecha:true,
+                    categoria:true,
+                    comprobante_url:true,
+                    descripcion:true,
+                    monto:true,
+                    empleado:{
+                        id:true,
+                         nombre:true
+                    },
+                    vehiculo:{
+                        id:true,
+                        marca:true,
+                        placas:true,
+                        tipo:true
+                    }
+                }
+        });
 
         return expense;
     }
