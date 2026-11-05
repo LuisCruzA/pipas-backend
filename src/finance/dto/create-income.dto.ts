@@ -24,6 +24,10 @@ export class CreateIncomeDto implements IIncome{
     @IsOptional()
     empleadoId:string;
 
+    @IsUUID()
+    @IsOptional()
+    clienteId?:string;
+
      @IsNumber()
          @IsPositive()
         @IsOptional()
