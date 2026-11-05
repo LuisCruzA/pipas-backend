@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { ConfigModule } from '@nestjs/config';
 import { StaticsModule } from './statics/statics.module.js';
 import { NoteModule } from './note/note.module.js';
+import { SpecialClientModule } from './special-client/special-client.module.js';
 
 
 @Module({
@@ -31,7 +32,8 @@ autoLoadEntities: true,
     FinanceModule,
     AuthModule,
     StaticsModule,
-    NoteModule],
+    NoteModule,
+    SpecialClientModule],
   controllers: [],
   providers: [],
 })

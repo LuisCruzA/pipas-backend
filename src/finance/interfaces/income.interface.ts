@@ -5,6 +5,7 @@ export interface IIncome{
     tipo_servicio:TipoServicio,
     vehiculoId?:string,
     empleadoId?:string,
+    clienteId?:string,
     cantidad_horas?:number,
     cantidad_viajes?:number
     cantidad_garrafones?:number,

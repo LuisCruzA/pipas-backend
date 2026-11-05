@@ -14,7 +14,7 @@ export class IncomesService {
 
    async findAll(){
      const income = await this.incomeRepo.find({
-        relations:{responsable:true, vehiculo:true},
+        relations:{responsable:true, vehiculo:true, cliente:true},
 select:{
             id:true,
             fecha:true,
@@ -36,6 +36,12 @@ select:{
                 placas:true,
                 tipo:true
 
+            },
+            cliente:{
+                id:true,
+                nombreEmpresa:true,
+                rfc:true,
+                razonSocial:true
             }
         }
      });
@@ -49,7 +55,7 @@ select:{
     async findOne(id:string){
         const income = await this.incomeRepo.findOne({
             where:{id:id},
-            relations:{responsable:true, vehiculo:true},
+            relations:{responsable:true, vehiculo:true, cliente:true},
  select:{
             id:true,
             fecha:true,
@@ -71,6 +77,12 @@ select:{
                 placas:true,
                 tipo:true
 
+            },
+            cliente:{
+                id:true,
+                nombreEmpresa:true,
+                rfc:true,
+                razonSocial:true
             }
         }
 

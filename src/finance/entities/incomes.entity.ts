@@ -3,6 +3,7 @@ import { TipoMaterial, TipoServicio, CapacidadPipa } from '../enums/incomes.enum
 import { User } from '../../user/entities/user.entity.js';
 import type { Relation } from 'typeorm';
 import { Vehicle } from '../../vehicle/entities/vehicle.entity.js';
+import { SpecialClient } from '../../special-client/entities/special-client.entity.js';
 
 
 @Entity('ingresos')
@@ -52,6 +53,13 @@ export class Incomes{
     @ManyToOne(()=> Vehicle,{nullable:true})
     @JoinColumn({name:'vehicle_id'})
     vehiculo: Relation<Vehicle>
+
+    @Column({name:'cliente_id', type:'uuid', nullable:true})
+    clienteId:string;
+
+    @ManyToOne(()=> SpecialClient, (client) => client.ingresos, {nullable:true, onDelete:'SET NULL'})
+    @JoinColumn({name:'cliente_id'})
+    cliente: Relation<SpecialClient>;
 
 
     @CreateDateColumn()
