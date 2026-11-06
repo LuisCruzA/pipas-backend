@@ -1,15 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity.js';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto.js';
 import { UpdateUserDto } from '../dto/update-user.dto.js';
-import * as bycript from 'bcrypt'
+import { RolUsuario, EstadoUsuario } from '../enums/user.enum.js';
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
-export class UsersService {
+export class UsersService implements OnApplicationBootstrap {
 
     //inyecccion de dependdencias para conexion a la bd
     constructor(@InjectRepository(User) private userRepo: Repository<User>){}
+
+    /**
+     * Al iniciar la aplicación, verifica si ya existe un usuario con rol 'admin'.
+     * Si no existe ninguno, crea un usuario administrador por defecto para permitir
+     * el primer inicio de sesión sin necesidad de scripts manuales.
+     */
+    async onApplicationBootstrap() {
+        try {
+            const adminUser = await this.userRepo.findOne({
+                where: { rol: RolUsuario.ADMIN },
+            });
+
+            if (!adminUser) {
+                const hashedPassword = await bcrypt.hash('admin1234', 10);
+                const defaultAdmin = this.userRepo.create({
+                    nombre: 'Administrador Principal',
+                    rol: RolUsuario.ADMIN,
+                    telefono: '9510000000',
+                    email: 'admin@aguaelmontecito.com',
+                    password: hashedPassword,
+                    estado: EstadoUsuario.ACTIVO,
+                });
+                await this.userRepo.save(defaultAdmin);
+                console.log('👑 [Seeder] Usuario administrador inicial creado:');
+                console.log('   📧 Email: admin@aguaelmontecito.com');
+                console.log('   🔑 Contraseña: admin1234');
+            }
+        } catch (err: any) {
+            console.warn('[Seeder] Nota al verificar admin inicial:', err?.message || err);
+        }
+    }
 
     async findAll(){
        const user = await this.userRepo.find();
@@ -63,7 +96,7 @@ export class UsersService {
    async create(body: CreateUserDto){
 
     if(body.password && body.rol === 'admin'){
-        body.password = await bycript.hash(body.password, 10)
+        body.password = await bcrypt.hash(body.password, 10)
     }
     else{
         body.password = undefined;
@@ -77,7 +110,7 @@ export class UsersService {
 
     async update(id:string, body:UpdateUserDto){
          if(body.password){
-            body.password = await bycript.hash(body.password, 10)
+            body.password = await bcrypt.hash(body.password, 10)
          }
 
          if(body.rol && body.rol!=='admin'){
