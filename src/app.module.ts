@@ -18,8 +18,8 @@ import { SpecialClientModule } from './special-client/special-client.module.js';
         ? {
             url: process.env.DATABASE_URL,
             ssl:
-              process.env.NODE_ENV === 'production' ||
-              process.env.DATABASE_URL.includes('railway')
+              process.env.DATABASE_URL.includes('sslmode=require') ||
+              process.env.DATABASE_URL.includes('proxy.rlwy.net')
                 ? { rejectUnauthorized: false }
                 : false,
           }
