@@ -11,18 +11,29 @@ import { SpecialClientModule } from './special-client/special-client.module.js';
 
 
 @Module({
-  imports: [//conexion global de typeOrm, no mover
+  imports: [//conexion global de typeOrm con soporte para Railway y desarrollo local
      TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5433,
-      username: 'admin',
-      password: 'postgres',
-      database: 'pipas_db',
-autoLoadEntities: true,
+      ...(process.env.DATABASE_URL
+        ? {
+            url: process.env.DATABASE_URL,
+            ssl:
+              process.env.NODE_ENV === 'production' ||
+              process.env.DATABASE_URL.includes('railway')
+                ? { rejectUnauthorized: false }
+                : false,
+          }
+        : {
+            host: process.env.DB_HOST || process.env.PGHOST || 'localhost',
+            port: Number(process.env.DB_PORT || process.env.PGPORT || 5433),
+            username: process.env.DB_USER || process.env.PGUSER || 'admin',
+            password: process.env.DB_PASSWORD || process.env.PGPASSWORD || 'postgres',
+            database: process.env.DB_NAME || process.env.PGDATABASE || 'pipas_db',
+          }),
+      autoLoadEntities: true,
       synchronize: true,
       retryDelay: 3000,
-      retryAttempts:10
+      retryAttempts: 10,
     }),
     ConfigModule.forRoot({
       isGlobal:true

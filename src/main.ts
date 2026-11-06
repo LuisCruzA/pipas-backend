@@ -6,9 +6,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // Habilita CORS para que el frontend Flutter (que corre en otro puerto u origen)
-  // pueda hacer peticiones HTTP al backend sin que el navegador las bloquee.
-  app.enableCors();
+  // Habilita CORS para permitir peticiones desde Flutter Web o cualquier origen
+  app.enableCors({
+    origin: '*', // O la URL definitiva que te dé Railway para el front
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   // Activación del escudo de validación global
   app.useGlobalPipes(
     new ValidationPipe({
@@ -29,6 +32,7 @@ async function bootstrap() {
    const document = SwaggerModule.createDocument(app, config); // 'api-docs' será la URL de acceso
   SwaggerModule.setup('api-docs', app, document);
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port, '0.0.0.0');
 }
 await bootstrap();
